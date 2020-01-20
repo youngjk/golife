@@ -15,12 +15,19 @@ func newPhone(n string, mn int, pn int, o string) *phone {
 }
 
 func (p phone) call(number int) {
-	fmt.Println("Calling from", p.phoneNumber, " to ", number)
+	fmt.Println("Calling from", p.phoneNumber, "to", number)
 }
 
 func (p *phone) switchOwner(newUser string) {
-	fmt.Println("Changing owner from", p.owner, " to ", newUser)
+	fmt.Println("Changing owner from", p.owner, "to", newUser)
 	p.owner = newUser
+}
+
+func (p phone) displayInfo() {
+	fmt.Println("Phone Name:", p.name)
+	fmt.Println("Model Number", p.modelNumber)
+	fmt.Println("Phone Number:", p.phoneNumber)
+	fmt.Println("Owner Name:", p.owner)
 }
 
 func main() {
@@ -34,8 +41,11 @@ func main() {
 	fmt.Println(phone2.phoneNumber)
 	phone2.phoneNumber = 5555555555
 	fmt.Println(phone2.phoneNumber)
+	phone3 := phone{"iPhone 11 Pro", 5, 4161111111, "EMINEM"}
 
 	phone1.call(1234123412)
 	phone1.switchOwner("YJ")
 	fmt.Println(phone1.owner)
+
+	phone3.displayInfo()
 }
