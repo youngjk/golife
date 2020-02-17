@@ -38,8 +38,6 @@ func evenNumber(arg int) (int, error) {
 	}
 }
 
-
-
 func main() {
 	for _, i := range []int{-1, 1} {
 		if n, e := positiveNum(i); e != nil {
