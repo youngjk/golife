@@ -14,6 +14,15 @@ func task(done chan bool) {
 	done <- true
 }
 
+// Channel sender/receiver behaviour specification
+func senderTunnel(pings chan<- string, pingString string) {
+	pings <- pingString
+}
+
+func receiveTunnel(pongs <-chan string) string {
+	return <-pongs
+}
+
 func main() {
 	pingChannel := make(chan string)
 	pongChannel := make(chan string)
@@ -50,4 +59,12 @@ func main() {
 	if <-doneChannel {
 		fmt.Println("Channel Signal Received")
 	}
+
+	// Channel restricted params
+	ch1 := make(chan string, 1)
+
+	go senderTunnel(ch1, "CHANNEL1 INPUT")
+	time.Sleep(time.Second)
+	output := receiveTunnel(ch1)
+	fmt.Println("RECEIVED:", output)
 }
