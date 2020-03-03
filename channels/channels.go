@@ -89,4 +89,33 @@ func main() {
 			fmt.Println("RECEIVED:", msg2)
 		}
 	}
+
+	// Channel Timeouts
+	chTimeout1 := make(chan string)
+
+	go func() {
+		time.Sleep(2 * time.Second)
+		chTimeout1 <- "5SECONDS"
+	}()
+
+	select {
+	case chTimeoutMsg1 := <-chTimeout1:
+		fmt.Println("RECEIVED:", chTimeoutMsg1)
+	case <-time.After(1 * time.Second):
+		fmt.Println("1 SECOND TIMEOUT")
+	}
+
+	chTimeout2 := make(chan string)
+
+	go func() {
+		time.Sleep(2 * time.Second)
+		chTimeout2 <- "2SECONDS"
+	}()
+
+	select {
+	case chTimeoutMsg2 := <-chTimeout2:
+		fmt.Println("RECEIVED:", chTimeoutMsg2)
+	case <-time.After(5 * time.Second):
+		fmt.Println("5 SECOND TIMEOUT")
+	}
 }
