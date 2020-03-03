@@ -67,4 +67,26 @@ func main() {
 	time.Sleep(time.Second)
 	output := receiveTunnel(ch1)
 	fmt.Println("RECEIVED:", output)
+
+	// Channel Select
+	chSelect1 := make(chan string)
+	chSelect2 := make(chan string)
+
+	go func() {
+		time.Sleep(2 * time.Second)
+		chSelect1 <- "SELECT1"
+	}()
+	go func() {
+		time.Sleep(4 * time.Second)
+		chSelect2 <- "SELECT2"
+	}()
+
+	for i := 0; i < 2; i++ {
+		select {
+		case msg1 := <-chSelect1:
+			fmt.Println("RECEIVED:", msg1)
+		case msg2 := <-chSelect2:
+			fmt.Println("RECEIVED:", msg2)
+		}
+	}
 }
