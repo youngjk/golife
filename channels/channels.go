@@ -118,4 +118,37 @@ func main() {
 	case <-time.After(5 * time.Second):
 		fmt.Println("5 SECOND TIMEOUT")
 	}
+
+	// Non Blocking Channels
+	msgCh1 := make(chan string)
+	sigCh1 := make(chan bool)
+
+	select {
+	case msg := <-msgCh1:
+		fmt.Println("RECEIVED", msg)
+	default:
+		fmt.Println("NO MSG RECEIVED")
+	}
+
+	msg := "HELLO WORLD"
+	select {
+	case msgCh1 <- msg:
+		fmt.Println("SENT", msg, "TO msgCh1")
+	default:
+		fmt.Println("NO MSG SENT")
+	}
+
+	go func() {
+		msgCh1 <- "INPUT"
+		time.Sleep(2 * time.Second)
+	}()
+
+	select {
+	case msg := <-msgCh1:
+		fmt.Println("RECEIVED", msg)
+	case sig := <-sigCh1:
+		fmt.Println("RECEIVED", sig)
+	default:
+		fmt.Println("NO ACTIVITY")
+	}
 }
