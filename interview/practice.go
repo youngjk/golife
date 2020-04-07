@@ -11,6 +11,7 @@ import (
 
 // Complete the sockMerchant function below.
 func sockMerchant(n int32, ar []int32) int32 {
+    // Can't have int32 as key within a map
     SocksCountMap := make(map[int]int32)
     for i := 0; i < int(n); i++ {
         SocksCountMap[int(ar[i])] += 1
