@@ -14,7 +14,7 @@ type Client struct {
 	gcProjectID   string
 }
 
-func New(orgID, gcProjectID string) (*Client, error) {
+func New(orgID, gcProjectID, scope string) (*Client, error) {
   _, err := google.FindDefaultCredentials(context.Background())
   if err != nil {
 		return nil, errors.Errorf("gcloud: finding Application Default credentials", err)

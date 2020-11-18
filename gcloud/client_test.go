@@ -4,8 +4,11 @@ import (
   "testing"
 )
 
+const testScope = "https://www.googleapis.com/auth/cloud-platform"
+
 func TestClient(t *testing.T) {
-  gc, err := New("<test-org-id>", "<test-project-id>")
+
+  gc, err := New("<test-org-id>", "<test-project-id>", testScope)
   if err != nil {
 		t.Errorf("gclient: Setting up Client" + "credentials: %w", err)
   }
